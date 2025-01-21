@@ -12,7 +12,7 @@ accept_reject <- function(f, c, n) {
   x <- double(n)
   
   while (TRUE) {
-    result <- f(y, c)
+    result <- f(y)
     accept <- result >= u
     result <- result[accept]
     
@@ -31,11 +31,26 @@ accept_reject <- function(f, c, n) {
 }
 
 
-f <- function(y, c) { # Beta(2,2)
-  6 * y * (1-y) / c
+beta <- function(p, q) { # Beta distribution
+  const <- factorial(p+q-1) / (factorial(p-1) * factorial(q-1))
+  # TODO: this underestimates the max, which is catastrophic
+  max_over_interval <- (p / (p+q))^(p-1) * (q / (p+q))^(q-1)
+  c <- const * max_over_interval
+  
+  # create the function f(t) for the accept-reject method
+  f <- function(y) {
+    const * y^(p-1) * (1-y)^(q-1)/ c
+  }
+  # package as a list
+  return(list(
+    funct = f,
+    c = c
+  ))
 }
 
-my_beta <- accept_reject(f, 1.5, 1000)
+result <- beta(2, 2)
+print(result$c)
+my_beta <- accept_reject(result$funct, result$c, 1000)
 print(mean(my_beta))
 print(var(my_beta))
 
