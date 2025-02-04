@@ -7,11 +7,11 @@ accept_reject <- function(f, c, n) {
   
   step_size <- n*c
   start <- 1
-  u <- runif(step_size)
-  y <- runif(step_size)
   x <- double(n)
   
   while (TRUE) {
+    u <- runif(step_size)
+    y <- runif(step_size)
     result <- f(y)
     accept <- result >= u
     result <- result[accept]
