@@ -59,7 +59,8 @@ sleep35 = data[,3:5]
 boxplot(sleep35, main = "Box Plot of the Sleep Data")
 
 # 3e
-tapply(data$Sleep, data$Danger, mean, na.rm = T)
+tapply(data$Sleep, data$Danger, mean, na.rm = TRUE)
+apply(data, 2, mean, na.rm=T)
 
 
 sumdice <- function(n) {
