@@ -105,6 +105,7 @@ y.mat = matrix(y, nrow = B)
 p.values = c()
 
 for (i in 1:B) {
+  print(i)
   x = x.mat[i,]
   y = y.mat[i,]
   
@@ -132,6 +133,7 @@ y.mat = matrix(y, nrow = B)
 p.values = c()
 
 for (i in 1:B) {
+  print(i)
   x = x.mat[i,]
   y = y.mat[i,]
   
