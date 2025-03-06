@@ -148,4 +148,32 @@ rowMeans(type.1.error.1d > alpha)
 write.csv(type.1.error.1d, "1d.csv", row.names=FALSE)
 
 
+# PROBLEM 2
+
+data <- read.table("brcadata2.txt", header = FALSE, sep = " ", fill = TRUE, stringsAsFactors = FALSE)
+
+sub1 = (data[, 2:8])
+sub2 = (data[, 9:16])
+
+pvec = c()
+for (i in 2:nrow(data)) {
+  p.value = ttest1(as.numeric(sub1[i,]), as.numeric(sub2[i,]))
+  pvec = c(pvec, p.value)
+}
+
+# 2b
+hist(pvec, freq=F, breaks=seq(0, 1, 1/14))
+
+# 2d
+m = 3170
+lambda = 0.4 # estimate by eye
+p.null <- sort(pvec)[(sum(pvec < lambda)+1):m]
+ks.test(p.null, "punif", lambda, 1)
+
+# 2e
+pi.hat = sum(pvec > lambda) / (m * (1-lambda))
+pi.hat
+
+
+
 
